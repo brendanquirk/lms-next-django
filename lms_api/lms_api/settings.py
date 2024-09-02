@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'api',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,6 +55,19 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 ROOT_URLCONF = 'lms_api.urls'
 
@@ -81,8 +95,12 @@ WSGI_APPLICATION = 'lms_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lms_api', 
+        'USER': 'brendanquirk',  
+        'PASSWORD': 'dbpass33', 
+        'HOST': 'localhost',  
+        'PORT': '5432',  
     }
 }
 
