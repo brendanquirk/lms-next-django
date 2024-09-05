@@ -25,17 +25,23 @@ const SignUp: React.FC = () => {
         'http://localhost:8000/api/register/',
         formData
       )
-      const { accessToken, refreshToken } = response.data
+      const { access, refresh } = response.data ?? {}
+      const accessToken = access ?? ''
+      const refreshToken = refresh ?? ''
 
       Cookies.set('accessToken', accessToken, {
-        secure: true,
-        sameSite: 'Strict',
+        sameSite: 'Lax',
       })
       Cookies.set('refreshToken', refreshToken, {
-        secure: true,
-        sameSite: 'Strict',
+        sameSite: 'Lax',
       })
       console.log('user registered', response.data)
+
+      // if (Cookies.get('accessToken') && Cookies.get('refreshToken')) {
+      //   window.location.href = '/'
+      // } else {
+      //   console.error('Failed to set cookies')
+      // }
     } catch (error) {
       console.error(error)
     }
